@@ -1,4 +1,4 @@
-FROM php:7.4-cli-alpine3.13 as php7_base
+FROM php:7.4-cli-alpine as php7_base
 
 COPY PrimePHP/PrimePHP.php /.
 COPY Docker/PHP/entrypoint.sh /usr/local/bin/entrypoint

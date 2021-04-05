@@ -7,11 +7,11 @@
 
 class PrimeSieve
 {
-    private array $rawbits;
+    private $rawbits;
 
-    private int $sieveSize;
+    private $sieveSize;
 
-    public static array $primeCounts = [
+    public static $primeCounts = [
         10 => 1,
         100 => 25,
         1000 => 168,
@@ -31,7 +31,7 @@ class PrimeSieve
         $this->rawbits = array_fill(0, $rawbitSize, true);
     }
 
-    private function getBit(int $index): bool
+    private function getBit($index)
     {
         if ($index % 2 !== 0) {
             return $this->rawbits[(int)$index / 2];
@@ -39,7 +39,7 @@ class PrimeSieve
         return false;
     }
 
-    private function clearBit(int $index): void
+    private function clearBit($index)
     {
         if ($index % 2 !== 0) {
             $this->rawbits[(int)$index / 2] = false;
@@ -67,7 +67,7 @@ class PrimeSieve
         }
     }
 
-    public function printResults(): void
+    public function printResults()
     {
         for ($i = 0; $i < $this->sieveSize; $i++) {
             if ($this->getBit($i)) {
@@ -76,7 +76,7 @@ class PrimeSieve
         }
     }
 
-    public function getRawbitCount(): int
+    public function getRawbitCount()
     {
         return array_sum($this->rawbits);
     }
@@ -105,6 +105,11 @@ while (getTimeDiffInMs($tStart) < $runTime * 1000) {
 
 $tD = getTimeDiffInMs($tStart);     //Get to total time passed
 
+$valid = 'False';
+
+if(validateResult($sieveSize) === $rawbitCount) {
+    $valid = 'True';
+}
 //Print the results
 printf(
     "Passes: %d, Time: %dms, Avg: %dms, Limit: %d, Count: %d, Valid: %s",
@@ -113,15 +118,15 @@ printf(
     $tD / $passes,
     $sieveSize,
     $rawbitCount,
-    (validateResult($sieveSize) === $rawbitCount) ? 'True' : 'False'
+    $valid
 );
 
-function getTimeDiffInMs(float $tStart): int
+function getTimeDiffInMs($tStart)
 {
     return (microtime(true) - $tStart) * 1000;
 }
 
-function validateResult($sieveSize): ?int
+function validateResult($sieveSize)
 {
     return PrimeSieve::$primeCounts[$sieveSize];
 }
